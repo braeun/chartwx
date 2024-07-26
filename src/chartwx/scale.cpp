@@ -148,7 +148,24 @@ double LinearScale::GetMajorTickStep(const Range &r) const
     delta = 1;
   else if (a < 4)
     delta = 2.5;
-  return delta * std::pow(10,e);
+  double step = delta * std::pow(10,e);
+  if ((r.GetMax() - r.GetMin()) / step > 12)
+  {
+    delta *= 2;
+    if (delta == 2) delta = 2.5;
+    step = delta * std::pow(10,e);
+  }
+  else if ((r.GetMax() - r.GetMin()) / step < 3)
+  {
+    if (delta == 1)
+      delta = 0.5;
+    else if (delta == 2.5)
+      delta = 1;
+    else
+      delta = 2.5;
+    step = delta * std::pow(10,e);
+  }
+  return step;
 }
 
 
