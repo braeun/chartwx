@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - main chart class                                                   *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -27,12 +27,12 @@
 
 namespace chartwx {
 
-Chart::Chart():
+Chart::Chart(ChartObject* parent):ChartObject(parent),
   forceZeroInRange(false)
 {
 }
 
-Chart::Chart(std::shared_ptr<Axis> axis1, std::shared_ptr<Axis> axis2):
+Chart::Chart(std::shared_ptr<Axis> axis1, std::shared_ptr<Axis> axis2,ChartObject* parent):ChartObject(parent),
   forceZeroInRange(false)
 {
   axes.push_back(axis1);

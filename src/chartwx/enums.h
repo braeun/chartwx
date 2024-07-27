@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - globally used enumerations                                         *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -28,6 +28,8 @@ namespace chartwx {
 enum class Direction { Horizontal, Vertical };
 
 enum class Side { Left, Right, Bottom, Top };
+
+enum class TickType { Major, Minor };
 
 } // namespace chartwx
 

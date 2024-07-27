@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - XY renderer                                                        *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -30,7 +30,7 @@ namespace chartwx {
 class XYChartRenderer: public ChartRenderer
 {
 public:
-  XYChartRenderer();
+  XYChartRenderer(ChartObject* parent=nullptr);
 
   virtual void Paint(wxDC& dc, const Scale* xtrans, const Scale* ytrans) const override;
 

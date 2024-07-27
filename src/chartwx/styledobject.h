@@ -1,8 +1,8 @@
 /********************************************************************************
  *                                                                              *
- * chartwx - axis base class                                                    *
+ * chartwx - base class of objects with a style                                 *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -20,50 +20,24 @@
  * imca. If not, see <https://www.gnu.org/licenses/>.                           *
  ********************************************************************************/
 
-#include "axis.h"
-#include "../scale.h"
+#ifndef STYLEDOBJECT_H
+#define STYLEDOBJECT_H
+
+#include "style.h"
 
 namespace chartwx {
 
-Axis::Axis(Side side, const std::string& label, ChartObject* parent):ChartObject(parent),
-  side(side),
-  label(label)
+class StyledObject
 {
-  valueFormatter = std::make_unique<DefaultValueFormatter>();
-}
+public:
+  StyledObject(StyledObject* parent=nullptr);
 
-Axis::~Axis()
-{
-}
+  const Style& GetStyle() const;
 
-Side Axis::GetSide() const
-{
-  return side;
-}
-
-Scale* Axis::GetScale() const
-{
-  return scale.get();
-}
-
-const std::string& Axis::GetLabel() const
-{
-  return label;
-}
-
-void Axis::SetLabel(const std::string& lbl)
-{
-  label = lbl;
-}
-
-ValueFormatter* Axis::GetValueFormatter() const
-{
-  return valueFormatter.get();
-}
-
-void Axis::SetValueFormatter(std::unique_ptr<ValueFormatter>&& fmt)
-{
-  valueFormatter = std::move(fmt);
-}
+private:
+  Style style;
+};
 
 } // namespace chartwx
+
+#endif // STYLEDOBJECT_H

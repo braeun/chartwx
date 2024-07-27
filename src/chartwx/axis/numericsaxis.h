@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - classes for numeric axes                                           *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -35,7 +35,7 @@ class NumericScale;
 class NumericsAxis: public Axis
 {
 public:
-  NumericsAxis(Side side, const std::string& label="");
+  NumericsAxis(Side side, const std::string& label="", ChartObject* parent=nullptr);
 
   void SetScale(std::unique_ptr<NumericScale>&& scale);
 
@@ -62,7 +62,7 @@ protected:
 class LinearAxis: public NumericsAxis
 {
 public:
-  LinearAxis(Side side, const std::string& label="");
+  LinearAxis(Side side, const std::string& label="", ChartObject* parent=nullptr);
 
 };
 
@@ -70,7 +70,7 @@ public:
 class LogarithmicAxis: public NumericsAxis
 {
 public:
-  LogarithmicAxis(Side side, const std::string& label="");
+  LogarithmicAxis(Side side, const std::string& label="", ChartObject* parent=nullptr);
 
 };
 

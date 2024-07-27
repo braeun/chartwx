@@ -23,10 +23,13 @@
 #include "sample1.h"
 #include <chartwx/chartwindow.h>
 #include <chartwx/chart.h>
+#include <chartwx/style.h>
 #include <chartwx/axis/numericsaxis.h>
 #include <chartwx/data/defaultdoubledataset.h>
 #include <chartwx/renderer/xychartrenderer.h>
 #include <wx/sizer.h>
+#include <wx/dcclient.h>
+#include <iostream>
 
 Sample1::Sample1()
 {
@@ -35,6 +38,10 @@ Sample1::Sample1()
 bool Sample1::OnInit()
 {
   frame = new wxFrame(nullptr,wxID_ANY,"Sample 1");
+//  chartwx::Style style = chartwx::Style::GetDefaultStyle();
+//  wxClientDC dc(frame);
+//  style.copyFromDC(dc);
+//  chartwx::Style::SetDefaultStyle(style);
   std::vector<double> xvalues{1,2,3,4};
   std::vector<double> yvalues{1,4,9,16};
   std::shared_ptr<chartwx::DataSet> ds = std::make_shared<chartwx::DefaultDoubleDataSet>("Test",xvalues,yvalues);

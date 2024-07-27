@@ -30,8 +30,6 @@
 
 namespace chartwx {
 
-enum class TickType { Major, Minor };
-
 struct TickValue
 {
   TickType type;
@@ -42,7 +40,7 @@ class Tick: public ChartObject
 {
 public:
   Tick();
-  Tick(Side side, const TickValue& v, const std::string& txt, const wxBitmap& txtBitmap);
+  Tick(Side side, const TickValue& v, const std::string& txt, const wxBitmap& txtBitmap, ChartObject* parent=nullptr);
 
   inline double GetValue() const;
 
@@ -52,7 +50,7 @@ public:
 
   inline wxSize GetTextSize() const;
 
-  virtual wxSize GetSizeHint() const;
+  virtual wxSize GetSizeHint() const override;
 
   /**
    * @brief Paint the tick.

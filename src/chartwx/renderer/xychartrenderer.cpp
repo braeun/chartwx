@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - XY renderer                                                        *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -25,19 +25,20 @@
 
 namespace chartwx {
 
-XYChartRenderer::XYChartRenderer()
+XYChartRenderer::XYChartRenderer(ChartObject* parent):ChartRenderer(parent)
 {
-
 }
 
 void XYChartRenderer::Paint(wxDC& dc, const Scale* xtrans, const Scale* ytrans) const
 {
   if (!xtrans || ! ytrans) return;
-//  dc.SetPen(*wxBLACK_PEN);
+  size_t n = 0;
   for (const auto& ds : datasets)
   {
     if (ds->IsEmpty()) continue;
-    std::vector<wxPoint> points(ds->GetSize());
+    size_t index = n % GetStyle().GetPalette().size();
+    dc.SetPen(GetStyle().GetPalette()[index]);
+    std::vector<wxPoint> points;
     for (size_t index=0;index<ds->GetSize();++index)
     {
       wxPoint p;

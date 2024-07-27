@@ -26,7 +26,7 @@
 
 namespace chartwx {
 
-NumericsAxis::NumericsAxis(Side side, const std::string& label):Axis(side,label)
+NumericsAxis::NumericsAxis(Side side, const std::string& label, ChartObject* parent):Axis(side,label,parent)
 {
 }
 
@@ -49,10 +49,11 @@ void NumericsAxis::LayoutPass1(wxDC& dc, const Range& xrange, const Range& yrang
   NumericScale* numscale = dynamic_cast<NumericScale*>(scale.get());
   numscale->UpdateRange(r);
   auto tickvalues = numscale->GetTicks();
+  dc.SetTextForeground(GetStyle().GetTextColour());
   ticks.clear();
   for (const auto& tv : tickvalues)
   {
-    Tick tick(side,tv,valueFormatter->Format(tv.v),valueFormatter->Draw(dc,tv.v));
+    Tick tick(side,tv,valueFormatter->Format(tv.v),valueFormatter->Draw(dc,tv.v),this);
     ticks.push_back(tick);
     maxTickSize.IncTo(tick.GetSizeHint());
   }
@@ -112,6 +113,7 @@ void NumericsAxis::PaintHorizontal(wxDC& dc) const
   if (side == Side::Top) y = GetArea().GetHeight();
   int w = GetArea().GetWidth();
   //  int h = GetArea().GetHeight();
+  dc.SetPen(GetStyle().GetAxisLinePen());
   dc.DrawLine(0,y,w,y);
   auto save = dc.GetTransformMatrix();
   for (const Tick& t : ticks)
@@ -129,6 +131,7 @@ void NumericsAxis::PaintHorizontal(wxDC& dc) const
   dc.SetTransformMatrix(save);
   if (!label.empty())
   {
+    dc.SetTextForeground(GetStyle().GetTextColour());
     int y0 = (side == Side::Bottom) ? maxTickSize.GetHeight() : -maxTickSize.GetHeight();
     dc.DrawText(label,(GetArea().GetWidth()-dc.GetTextExtent(label).GetWidth())/2,y0);
   }
@@ -140,6 +143,7 @@ void NumericsAxis::PaintVertical(wxDC& dc) const
   if (side == Side::Left) x = GetArea().GetWidth();
   //  int w = GetArea().GetWidth();
   int h = GetArea().GetHeight();
+  dc.SetPen(GetStyle().GetAxisLinePen());
   dc.DrawLine(x,0,x,h);
   auto save = dc.GetTransformMatrix();
   for (const Tick& t : ticks)
@@ -159,13 +163,14 @@ void NumericsAxis::PaintVertical(wxDC& dc) const
   if (!label.empty())
   {
     int xl = (side == Side::Left) ? x-maxTickSize.GetWidth()-dc.GetFontMetrics().height : maxTickSize.GetWidth();
+    dc.SetTextForeground(GetStyle().GetTextColour());
     dc.DrawRotatedText(label,xl,(GetArea().GetHeight()+dc.GetTextExtent(label).GetWidth())/2,90);
   }
 }
 
 
 
-LinearAxis::LinearAxis(Side side, const std::string& label):NumericsAxis(side,label)
+LinearAxis::LinearAxis(Side side, const std::string& label, ChartObject* parent):NumericsAxis(side,label,parent)
 {
   if (side == Side::Left || side == Side::Right)
     scale = std::make_unique<LinearScale>(Direction::Vertical);
@@ -175,7 +180,7 @@ LinearAxis::LinearAxis(Side side, const std::string& label):NumericsAxis(side,la
 
 
 
-LogarithmicAxis::LogarithmicAxis(Side side, const std::string& label):NumericsAxis(side,label)
+LogarithmicAxis::LogarithmicAxis(Side side, const std::string& label, ChartObject* parent):NumericsAxis(side,label,parent)
 {
   if (side == Side::Left || side == Side::Right)
     scale = std::make_unique<LogarithmicScale>(Direction::Vertical);

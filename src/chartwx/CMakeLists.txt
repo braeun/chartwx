@@ -4,6 +4,8 @@ add_library(chartwx
   chartobject.cpp
   chartwindow.cpp
   scale.cpp
+  style.cpp
+  styledobject.cpp
   valueformatter.cpp
   data/dataset.cpp
   data/defaultdoubledataset.cpp
@@ -23,6 +25,8 @@ target_sources(chartwx
   chartobject.h
   chartwindow.h
   scale.h
+  style.h
+  styledobject.h
   valueformatter.h
   data/dataset.h
   data/defaultdoubledataset.h

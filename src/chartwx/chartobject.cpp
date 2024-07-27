@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - chart object base class                                            *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -24,7 +24,7 @@
 
 namespace chartwx {
 
-ChartObject::ChartObject()
+ChartObject::ChartObject(ChartObject* parent):StyledObject(parent)
 {
 }
 

@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - axis base class                                                    *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -35,12 +35,16 @@ class Range;
 class Axis: public ChartObject
 {
 public:
-  Axis(Side side, const std::string& label="");
+  Axis(Side side, const std::string& label="", ChartObject* parent=nullptr);
   virtual ~Axis();
 
   Side GetSide() const;
 
   Scale* GetScale() const;
+
+  const std::string& GetLabel() const;
+
+  void SetLabel(const std::string& lbl);
 
   ValueFormatter* GetValueFormatter() const;
 

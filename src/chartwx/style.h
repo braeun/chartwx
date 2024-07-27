@@ -1,8 +1,8 @@
 /********************************************************************************
  *                                                                              *
- * chartwx - axis base class                                                    *
+ * chartwx - style definition                                                   *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -20,50 +20,54 @@
  * imca. If not, see <https://www.gnu.org/licenses/>.                           *
  ********************************************************************************/
 
-#include "axis.h"
-#include "../scale.h"
+#ifndef STYLE_H
+#define STYLE_H
+
+#include <wx/colour.h>
+#include <wx/pen.h>
+#include <memory>
+#include <vector>
 
 namespace chartwx {
 
-Axis::Axis(Side side, const std::string& label, ChartObject* parent):ChartObject(parent),
-  side(side),
-  label(label)
+class Style
 {
-  valueFormatter = std::make_unique<DefaultValueFormatter>();
-}
+public:
+  Style(const Style& style);
 
-Axis::~Axis()
-{
-}
+  void SetTextColor(const wxColour& c);
 
-Side Axis::GetSide() const
-{
-  return side;
-}
+  const wxColour& GetTextColour() const;
 
-Scale* Axis::GetScale() const
-{
-  return scale.get();
-}
+  void SetAxisLinePen(const wxPen& pen);
 
-const std::string& Axis::GetLabel() const
-{
-  return label;
-}
+  const wxPen& GetAxisLinePen() const;
 
-void Axis::SetLabel(const std::string& lbl)
-{
-  label = lbl;
-}
+  void SetTickLinePen(const wxPen& pen);
 
-ValueFormatter* Axis::GetValueFormatter() const
-{
-  return valueFormatter.get();
-}
+  const wxPen& GetTickLinePen() const;
 
-void Axis::SetValueFormatter(std::unique_ptr<ValueFormatter>&& fmt)
-{
-  valueFormatter = std::move(fmt);
-}
+  void SetPalette(const std::vector<wxPen>& p);
+
+  const std::vector<wxPen> GetPalette() const;
+
+  void copyFromDC(const wxDC& dc);
+
+  static void SetDefaultStyle(const Style& style);
+
+  static const Style& GetDefaultStyle();
+
+private:
+  Style();
+
+  wxColour textForeground;
+  wxPen axisline;
+  wxPen tickline;
+  std::vector<wxPen> palette;
+
+  static std::unique_ptr<Style> defaultStyle;
+};
 
 } // namespace chartwx
+
+#endif // STYLE_H

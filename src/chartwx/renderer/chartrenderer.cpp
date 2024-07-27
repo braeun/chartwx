@@ -2,8 +2,7 @@
  *                                                                              *
  * chartwx - renderer base class                                                *
  *                                                                              *
- * modified: 2024-07-26                                                         *
- *                                                                              *
+ * modified: 2024-07-27                                                          *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
  ********************************************************************************
@@ -24,7 +23,7 @@
 
 namespace chartwx {
 
-ChartRenderer::ChartRenderer()
+ChartRenderer::ChartRenderer(ChartObject* parent):ChartObject(parent)
 {
 }
 

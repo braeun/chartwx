@@ -1,6 +1,6 @@
 /********************************************************************************
  *                                                                              *
- * chartwx - axis tick class                                                    *
+ * chartwx - style definition                                                   *
  *                                                                              *
  * modified: 2024-07-27                                                         *
  *                                                                              *
@@ -20,63 +20,95 @@
  * imca. If not, see <https://www.gnu.org/licenses/>.                           *
  ********************************************************************************/
 
-#include "tick.h"
+#include "style.h"
+#include <wx/dcscreen.h>
+#include <wx/settings.h>
+#include <iostream>
 
 namespace chartwx {
 
-const int ticklength = 5;
+std::unique_ptr<Style> Style::defaultStyle;
 
-Tick::Tick() {}
-
-Tick::Tick(Side side, const TickValue& v, const std::string& txt, const wxBitmap& txtBitmap, ChartObject* parent):ChartObject(parent),
-  side(side),
-  type(v.type),
-  v(v.v),
-  txt(txt),
-  txtBitmap(txtBitmap)
+Style::Style()
 {
-  area = wxRect(txtBitmap.GetSize());
-  switch (side)
-  {
-    case Side::Left:
-    case Side::Right:
-      area.SetWidth(area.GetWidth()+ticklength);
-      break;
-    case Side::Bottom:
-    case Side::Top:
-      area.SetHeight(area.GetHeight()+ticklength);
-      break;
-  }
+  auto color = wxSystemSettings::GetColour(wxSYS_COLOUR_CAPTIONTEXT);
+  textForeground = color;
+  axisline = wxPen(color);
+  tickline = wxPen(color);
+  palette.push_back(wxPen(*wxBLUE_PEN));
+  palette.push_back(wxPen(*wxRED_PEN));
+  palette.push_back(wxPen(*wxGREEN_PEN));
 }
 
-wxSize Tick::GetSizeHint() const
+Style::Style(const Style& style):
+  textForeground(style.textForeground),
+  axisline(style.axisline),
+  tickline(style.tickline),
+  palette(style.palette)
 {
-  return area.GetSize();
 }
 
-void Tick::Paint(wxDC& dc, const Scale* /*xtrans*/, const Scale* /*ytrans*/) const
+void Style::SetTextColor(const wxColour& c)
 {
-  dc.SetPen(GetStyle().GetTickLinePen());
-  if (side == Side::Left)
+  textForeground = c;
+}
+
+const wxColour& Style::GetTextColour() const
+{
+  return textForeground;
+}
+
+void Style::SetAxisLinePen(const wxPen& pen)
+{
+  axisline = pen;
+}
+
+const wxPen& Style::GetAxisLinePen() const
+{
+  return axisline;
+}
+
+void Style::SetTickLinePen(const wxPen& pen)
+{
+  tickline = pen;
+}
+
+const wxPen& Style::GetTickLinePen() const
+{
+  return tickline;
+}
+
+void Style::copyFromDC(const wxDC& dc)
+{
+  textForeground = dc.GetTextForeground();
+  axisline = wxPen(dc.GetTextForeground());
+  tickline = wxPen(dc.GetTextForeground());
+}
+
+void Style::SetPalette(const std::vector<wxPen>& p)
+{
+  palette = p;
+}
+
+const std::vector<wxPen> Style::GetPalette() const
+{
+  return palette;
+}
+
+
+void Style::SetDefaultStyle(const Style& style)
+{
+  defaultStyle.reset(new Style(style));
+}
+
+
+const Style& Style::GetDefaultStyle()
+{
+  if (!defaultStyle)
   {
-    dc.DrawLine(-ticklength,0,0,0);
-    dc.DrawBitmap(txtBitmap,-txtBitmap.GetWidth()-ticklength,-txtBitmap.GetHeight()/2);
+    defaultStyle.reset(new Style());
   }
-  else if (side == Side::Left)
-  {
-    dc.DrawLine(0,0,ticklength,0);
-    dc.DrawBitmap(txtBitmap,ticklength,-txtBitmap.GetHeight()/2);
-  }
-  else if (side == Side::Bottom)
-  {
-    dc.DrawLine(0,0,0,ticklength);
-    dc.DrawBitmap(txtBitmap,-txtBitmap.GetWidth()/2,ticklength);
-  }
-  else if (side == Side::Top)
-  {
-    dc.DrawLine(0,0,0,-ticklength);
-    dc.DrawBitmap(txtBitmap,-txtBitmap.GetWidth()/2,-ticklength-txtBitmap.GetHeight());
-  }
+  return *defaultStyle;
 }
 
 } // namespace chartwx

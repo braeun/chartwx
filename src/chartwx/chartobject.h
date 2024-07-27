@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - chart object base class                                            *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -23,6 +23,7 @@
 #ifndef CHARTWX_CHARTOBJECT_H
 #define CHARTWX_CHARTOBJECT_H
 
+#include "styledobject.h"
 #include "wx/dc.h"
 
 namespace chartwx {
@@ -30,10 +31,10 @@ namespace chartwx {
 class Range;
 class Scale;
 
-class ChartObject
+class ChartObject: public StyledObject
 {
 public:
-  ChartObject();
+  ChartObject(ChartObject* parent=nullptr);
 
   const wxRect GetArea() const;
 

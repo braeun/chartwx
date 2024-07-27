@@ -38,8 +38,8 @@ class Scale;
 class Chart: public ChartObject
 {
 public:
-  Chart();
-  Chart(std::shared_ptr<Axis> axis1, std::shared_ptr<Axis> axis2);
+  Chart(ChartObject* parent=nullptr);
+  Chart(std::shared_ptr<Axis> axis1, std::shared_ptr<Axis> axis2,ChartObject* parent=nullptr);
   virtual ~Chart();
 
   bool IsForceZeroInRange() const;

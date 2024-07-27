@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - renderer base class                                                *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-07-27                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -34,7 +34,7 @@ namespace chartwx {
 class ChartRenderer: public ChartObject
 {
 public:
-  ChartRenderer();
+  ChartRenderer(ChartObject* parent=nullptr);
   virtual ~ChartRenderer();
 
   virtual void Clear();
