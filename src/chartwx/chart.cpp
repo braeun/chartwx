@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - main chart class                                                   *
  *                                                                              *
- * modified: 2024-07-27                                                         *
+ * modified: 2024-11-06                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -23,6 +23,7 @@
 #include "chart.h"
 #include "scale.h"
 #include "axis/axis.h"
+#include "axis/numericaxis.h"
 #include "renderer/chartrenderer.h"
 
 namespace chartwx {
@@ -30,6 +31,10 @@ namespace chartwx {
 Chart::Chart(ChartObject* parent):ChartObject(parent),
   forceZeroInRange(false)
 {
+  std::shared_ptr<Axis> xaxis = std::make_shared<LinearAxis>(Side::Bottom,"X Axis");
+  axes.push_back(xaxis);
+  std::shared_ptr<Axis> yaxis = std::make_shared<LinearAxis>(Side::Left,"Y Axis");
+  axes.push_back(yaxis);
 }
 
 Chart::Chart(std::shared_ptr<Axis> axis1, std::shared_ptr<Axis> axis2,ChartObject* parent):ChartObject(parent),

@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - chart wxWindow                                                     *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-11-06                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -38,7 +38,11 @@ public:
   ChartWindow(wxWindow *parent, wxWindowID id, const wxPoint &pos=wxDefaultPosition,
               const wxSize &size=wxDefaultSize, long style=0, const wxString &name=wxPanelNameStr);
 
+  virtual size_t GetChartCount() const;
+
   virtual void AddChart(std::shared_ptr<Chart>& chart);
+
+  virtual std::shared_ptr<Chart> GetChart(size_t index) const;
 
   virtual bool Layout() override;
 

@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - main chart class                                                   *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-11-06                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -38,7 +38,12 @@ class Scale;
 class Chart: public ChartObject
 {
 public:
+  /**
+   * @brief Create a chart with a linear x and y axis.
+   * @param parent
+   */
   Chart(ChartObject* parent=nullptr);
+
   Chart(std::shared_ptr<Axis> axis1, std::shared_ptr<Axis> axis2,ChartObject* parent=nullptr);
   virtual ~Chart();
 

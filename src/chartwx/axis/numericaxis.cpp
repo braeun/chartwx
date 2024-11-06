@@ -20,7 +20,7 @@
  * imca. If not, see <https://www.gnu.org/licenses/>.                           *
  ********************************************************************************/
 
-#include "numericsaxis.h"
+#include "numericaxis.h"
 #include "../scale.h"
 #include <stdexcept>
 

@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - renderer base class                                                *
  *                                                                              *
- * modified: 2024-07-27                                                         *
+ * modified: 2024-11-06                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -39,7 +39,7 @@ public:
 
   virtual void Clear();
 
-  virtual void AddDataSet(std::shared_ptr<DataSet>& ds);
+  virtual void AddDataSet(std::shared_ptr<DataSet> ds);
 
   virtual Range GetXRange() const;
 
@@ -47,8 +47,6 @@ public:
 
 protected:
   std::vector<std::shared_ptr<DataSet>> datasets;
-  Range xrange;
-  Range yrange;
 };
 
 } // namespace chartwx

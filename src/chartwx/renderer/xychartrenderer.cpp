@@ -35,7 +35,7 @@ void XYChartRenderer::Paint(wxDC& dc, const Scale* xtrans, const Scale* ytrans) 
   size_t n = 0;
   for (const auto& ds : datasets)
   {
-    if (ds->IsEmpty()) continue;
+    if (ds->IsEmpty() || ds->GetSize() < 2) continue;
     size_t index = n % GetStyle().GetPalette().size();
     dc.SetPen(GetStyle().GetPalette()[index]);
     std::vector<wxPoint> points;

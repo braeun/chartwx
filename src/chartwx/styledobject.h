@@ -34,6 +34,8 @@ public:
 
   const Style& GetStyle() const;
 
+  void SetStyle(const Style& s);
+
 private:
   Style style;
 };

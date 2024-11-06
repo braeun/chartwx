@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - chart wxWindow                                                     *
  *                                                                              *
- * modified: 2024-07-26                                                         *
+ * modified: 2024-11-06                                                         *
  *                                                                              *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
@@ -23,6 +23,7 @@
 #include "chartwindow.h"
 #include "chart.h"
 #include <wx/dcclient.h>
+#include <stdexcept>
 
 namespace chartwx {
 
@@ -37,9 +38,20 @@ ChartWindow::ChartWindow(wxWindow *parent, wxWindowID id, const wxPoint &pos, co
   Bind(wxEVT_PAINT,&ChartWindow::OnPaint,this);
 }
 
+size_t ChartWindow::GetChartCount() const
+{
+  return charts.size();
+}
+
 void ChartWindow::AddChart(std::shared_ptr<Chart>& chart)
 {
   charts.push_back(chart);
+}
+
+std::shared_ptr<Chart> ChartWindow::GetChart(size_t index) const
+{
+  if (index >= charts.size()) throw std::runtime_error("ChartWindow::GetChart - INdex out of bounds");
+  return charts[index];
 }
 
 bool ChartWindow::Layout()

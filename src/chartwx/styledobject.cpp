@@ -35,5 +35,12 @@ const Style& StyledObject::GetStyle() const
   return style;
 }
 
+void  StyledObject::SetStyle(const Style& s)
+{
+  style = s;
+}
+
+
+
 } // namespace chartwx
 

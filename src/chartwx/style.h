@@ -33,7 +33,7 @@ namespace chartwx {
 class Style
 {
 public:
-  Style(const Style& style);
+//  Style(const Style& style);
 
   void SetTextColor(const wxColour& c);
 

@@ -13,7 +13,7 @@ add_library(chartwx
   renderer/chartrenderer.cpp
   renderer/xychartrenderer.cpp
   axis/axis.cpp
-  axis/numericsaxis.cpp
+  axis/numericaxis.cpp
   axis/tick.cpp
 )
 
@@ -34,7 +34,7 @@ target_sources(chartwx
   renderer/chartrenderer.h
   renderer/xychartrenderer.h
   axis/axis.h
-  axis/numericsaxis.h
+  axis/numericaxis.h
   axis/tick.h
 )
 

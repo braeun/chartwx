@@ -24,7 +24,7 @@
 #include <chartwx/chartwindow.h>
 #include <chartwx/chart.h>
 #include <chartwx/style.h>
-#include <chartwx/axis/numericsaxis.h>
+#include <chartwx/axis/numericaxis.h>
 #include <chartwx/data/defaultdoubledataset.h>
 #include <chartwx/renderer/xychartrenderer.h>
 #include <wx/sizer.h>

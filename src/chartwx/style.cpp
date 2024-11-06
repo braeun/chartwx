@@ -40,13 +40,13 @@ Style::Style()
   palette.push_back(wxPen(*wxGREEN_PEN));
 }
 
-Style::Style(const Style& style):
-  textForeground(style.textForeground),
-  axisline(style.axisline),
-  tickline(style.tickline),
-  palette(style.palette)
-{
-}
+//Style::Style(const Style& style):
+//  textForeground(style.textForeground),
+//  axisline(style.axisline),
+//  tickline(style.tickline),
+//  palette(style.palette)
+//{
+//}
 
 void Style::SetTextColor(const wxColour& c)
 {

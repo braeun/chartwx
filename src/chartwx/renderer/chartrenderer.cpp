@@ -2,7 +2,7 @@
  *                                                                              *
  * chartwx - renderer base class                                                *
  *                                                                              *
- * modified: 2024-07-27                                                          *
+ * modified: 2024-11-06                                                          *
  ********************************************************************************
  * Copyright (C) Harald Braeuning                                               *
  ********************************************************************************
@@ -34,25 +34,31 @@ ChartRenderer::~ChartRenderer()
 void ChartRenderer::Clear()
 {
   datasets.clear();
-  xrange = Range();
-  yrange = Range();
 }
 
-void ChartRenderer::AddDataSet(std::shared_ptr<DataSet>& ds)
+void ChartRenderer::AddDataSet(std::shared_ptr<DataSet> ds)
 {
   datasets.push_back(ds);
-  xrange.Add(ds->GetXRange());
-  yrange.Add(ds->GetYRange());
 }
 
 Range ChartRenderer::GetXRange() const
 {
-  return xrange;
+  Range range;
+  for (const auto& ds : datasets)
+  {
+    range.Add(ds->GetXRange());
+  }
+  return range;
 }
 
 Range ChartRenderer::GetYRange() const
 {
-  return yrange;
+  Range range;
+  for (const auto& ds : datasets)
+  {
+    range.Add(ds->GetYRange());
+  }
+  return range;
 }
 
 
