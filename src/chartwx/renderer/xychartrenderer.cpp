@@ -25,8 +25,19 @@
 
 namespace chartwx {
 
-XYChartRenderer::XYChartRenderer(ChartObject* parent):ChartRenderer(parent)
+XYChartRenderer::XYChartRenderer(ChartObject* parent):ChartRenderer(parent),
+  mode(Mode::Line)
 {
+}
+
+XYChartRenderer::Mode XYChartRenderer::GetMode() const
+{
+  return mode;
+}
+
+void XYChartRenderer::SetMode(Mode newMode)
+{
+  mode = newMode;
 }
 
 void XYChartRenderer::Paint(wxDC& dc, const Scale* xtrans, const Scale* ytrans) const
@@ -46,7 +57,23 @@ void XYChartRenderer::Paint(wxDC& dc, const Scale* xtrans, const Scale* ytrans) 
       p.y = ytrans->ToScreen(ds->GetY(index));
       points.push_back(p);
     }
-    dc.DrawLines(points.size(),points.data());
+    if (mode == Mode::Step)
+    {
+      std::vector<wxPoint> points1;
+      points1.push_back(points[0]);
+      for (size_t i=1;i<points.size();++i)
+      {
+        int dx = points[i].x - points[i-1].x;
+        points1.push_back(wxPoint(points[i-1].x+dx/2,points[i-1].y));
+        points1.push_back(wxPoint(points[i-1].x+dx/2,points[i].y));
+        points1.push_back(points[i]);
+      }
+      dc.DrawLines(points1.size(),points1.data());
+    }
+    else
+    {
+      dc.DrawLines(points.size(),points.data());
+    }
   }
 }
 

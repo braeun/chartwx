@@ -30,9 +30,20 @@ namespace chartwx {
 class XYChartRenderer: public ChartRenderer
 {
 public:
+
+  enum class Mode { Line, Step };
+
   XYChartRenderer(ChartObject* parent=nullptr);
 
+  Mode GetMode() const;
+
+  void SetMode(Mode newMode);
+
   virtual void Paint(wxDC& dc, const Scale* xtrans, const Scale* ytrans) const override;
+
+private:
+
+  Mode mode;
 
 };
 
